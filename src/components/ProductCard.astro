@@ -1,5 +1,5 @@
 ---
-// ProductCard.astro - Mobile Optimized Card
+// ProductCard.astro - Mobile Optimized Card con modo Edición Inline
 interface Props {
   product: {
     id: string;
@@ -37,88 +37,255 @@ const badgeClass = badgeStyles[product.badgeColor] || badgeStyles.pink;
 ---
 
 <div
-  class="product-item group bg-white rounded-3xl p-3 sm:p-4 border border-pink-100 shadow-card hover:shadow-soft transition-all duration-300 flex flex-col justify-between"
+  class="product-item group bg-white rounded-3xl p-3 sm:p-4 border border-pink-100 shadow-card hover:shadow-soft transition-all duration-300 flex flex-col justify-between relative"
   data-category={product.category}
   data-product-id={product.id}
 >
-  <div>
-    <!-- Contenedor de Imagen y Badge -->
-    <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-tr from-pink-50 via-purple-50 to-amber-50 mb-3 flex items-center justify-center p-2">
-      <!-- Badge de estado -->
-      <span class={`absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full border shadow-xs z-10 ${badgeClass}`}>
-        {product.badge}
-      </span>
-
-      <!-- Categoría sutil -->
-      <span class="absolute top-2.5 right-2.5 text-[9px] font-medium text-milalu-muted bg-white/90 backdrop-blur px-2 py-0.5 rounded-full shadow-xs">
-        {product.categoryName}
-      </span>
-
-      <!-- Imagen del producto con fallback estilizado -->
-      <img
-        src={product.image}
-        alt={product.name}
-        class="w-full h-full object-contain p-2 rounded-xl group-hover:scale-105 transition-transform duration-300"
-        loading="lazy"
-      />
-
-      <!-- Overlay rápido de botón ver más al tocar o pasar el mouse -->
-      <button
-        type="button"
-        class="open-modal-btn absolute inset-0 bg-milalu-dark/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold gap-1.5"
-        data-id={product.id}
-      >
-        <span class="bg-white/95 text-milalu-dark px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-1.5 font-bold">
-          <svg class="w-3.5 h-3.5 text-milalu-pink flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-          </svg>
-          <span>Ver detalles</span>
+  <!-- VISTA DE EXHIBICIÓN NORMAL DEL PRODUCTO -->
+  <div class="product-view-mode flex flex-col justify-between h-full">
+    <div>
+      <!-- Contenedor de Imagen y Badge -->
+      <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-tr from-pink-50 via-purple-50 to-amber-50 mb-3 flex items-center justify-center p-2">
+        <!-- Badge de estado -->
+        <span class={`product-card-badge absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full border shadow-xs z-10 ${badgeClass}`}>
+          {product.badge}
         </span>
-      </button>
+
+        <!-- Botón Editar discreto (Visible en Modo Administrador) -->
+        <button
+          type="button"
+          class="admin-edit-btn hidden absolute top-2.5 right-2.5 z-20 bg-milalu-dark hover:bg-milalu-pink text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md items-center gap-1 transition-all active:scale-95 cursor-pointer"
+          data-id={product.id}
+          title="Editar este producto"
+        >
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+          </svg>
+          <span>Editar</span>
+        </button>
+
+        <!-- Categoría sutil (cuando no se está editando) -->
+        <span class="product-card-category-label absolute top-2.5 right-2.5 text-[9px] font-medium text-milalu-muted bg-white/90 backdrop-blur px-2 py-0.5 rounded-full shadow-xs">
+          {product.categoryName}
+        </span>
+
+        <!-- Imagen del producto -->
+        <img
+          src={product.image}
+          alt={product.name}
+          class="product-card-img w-full h-full object-contain p-2 rounded-xl group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+
+        <!-- Overlay rápido de botón ver más al tocar o pasar el mouse -->
+        <button
+          type="button"
+          class="open-modal-btn absolute inset-0 bg-milalu-dark/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold gap-1.5"
+          data-id={product.id}
+        >
+          <span class="bg-white/95 text-milalu-dark px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-1.5 font-bold">
+            <svg class="w-3.5 h-3.5 text-milalu-pink flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+            <span>Ver detalles</span>
+          </span>
+        </button>
+      </div>
+
+      <!-- Título y descripción -->
+      <h3 class="product-card-title font-bubble text-base sm:text-lg font-bold text-milalu-dark leading-snug line-clamp-2">
+        {product.name}
+      </h3>
+
+      <p class="product-card-desc mt-1 text-xs text-milalu-muted line-clamp-2">
+        {product.shortDesc}
+      </p>
     </div>
 
-    <!-- Título y descripción -->
-    <h3 class="font-bubble text-base sm:text-lg font-bold text-milalu-dark leading-snug line-clamp-2">
-      {product.name}
-    </h3>
+    <!-- Precios y acciones táctiles para celular -->
+    <div class="mt-3 pt-3 border-t border-pink-100/60">
+      <div class="flex items-center justify-between mb-2.5">
+        <div>
+          <span class="text-[10px] text-milalu-muted uppercase font-medium block">Desde</span>
+          <span class="product-card-price font-bubble text-lg font-bold text-milalu-pink">
+            {product.price}
+          </span>
+        </div>
 
-    <p class="mt-1 text-xs text-milalu-muted line-clamp-2">
-      {product.shortDesc}
-    </p>
+        <button
+          type="button"
+          class="open-modal-btn text-xs text-milalu-purple font-semibold hover:underline flex items-center gap-1 py-1 px-2"
+          data-id={product.id}
+        >
+          <span>Detalles</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Botón directo para pedir por WhatsApp -->
+      <a
+        href={waLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="product-card-walink w-full bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-xs font-semibold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm transition-all"
+      >
+        <img src="/images/whatsapp-white.png" alt="WhatsApp" class="w-4 h-4 object-contain flex-shrink-0" width="16" height="16" />
+        <span>Personalizar en WhatsApp</span>
+      </a>
+    </div>
   </div>
 
-  <!-- Precios y acciones táctiles para celular -->
-  <div class="mt-3 pt-3 border-t border-pink-100/60">
-    <div class="flex items-center justify-between mb-2.5">
-      <div>
-        <span class="text-[10px] text-milalu-muted uppercase font-medium block">Desde</span>
-        <span class="font-bubble text-lg font-bold text-milalu-pink">
-          {product.price}
+  <!-- VISTA DE EDICIÓN INLINE (Se activa al dar clic en 'Editar') -->
+  <div class="product-edit-mode hidden flex-col justify-between h-full animate-pop">
+    <div>
+      <!-- Header de edición -->
+      <div class="flex items-center justify-between mb-2 pb-2 border-b border-pink-100">
+        <span class="text-[10px] font-bold text-milalu-pink uppercase tracking-wider flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          Editar Artículo
         </span>
+        <button
+          type="button"
+          class="card-edit-cancel-btn text-xs text-milalu-muted hover:text-rose-500 font-bold px-2 py-0.5 rounded-lg hover:bg-rose-50 transition-colors"
+          title="Cancelar edición"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Zona de Foto editable con previsualización -->
+      <div
+        class="relative w-full aspect-square rounded-2xl overflow-hidden bg-pink-50/80 border-2 border-dashed border-pink-200 mb-3 flex flex-col items-center justify-center p-2 text-center group cursor-pointer hover:border-milalu-pink transition-colors"
+      >
+        <input
+          type="file"
+          class="card-edit-file-input absolute inset-0 opacity-0 cursor-pointer z-20"
+          accept="image/*"
+          title="Cambiar foto del producto"
+        />
+        
+        <img
+          src={product.image}
+          alt={product.name}
+          class="card-edit-img-preview w-full h-full object-contain rounded-xl z-10"
+        />
+
+        <div class="absolute bottom-2 right-2 z-20 bg-milalu-dark/80 hover:bg-milalu-dark text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-sm pointer-events-none flex items-center gap-1">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          </svg>
+          <span>Cambiar foto</span>
+        </div>
+      </div>
+
+      <!-- Categoría y Etiqueta -->
+      <div class="grid grid-cols-2 gap-2 mb-2.5">
+        <div>
+          <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Categoría</label>
+          <select class="card-edit-category-select w-full text-xs font-semibold bg-pink-50/60 border border-pink-200 rounded-xl px-2 py-1.5 text-milalu-dark focus:ring-2 focus:ring-milalu-pink outline-none">
+            <option value="tazas" selected={product.category === 'tazas'}>Tazas & Tarros</option>
+            <option value="termos" selected={product.category === 'termos'}>Termos</option>
+            <option value="llaveros" selected={product.category === 'llaveros'}>Llaveros</option>
+            <option value="accesorios" selected={product.category === 'accesorios'}>Accesorios & Oficina</option>
+            <option value="regalos" selected={product.category === 'regalos'}>Regalos & Juegos</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Etiqueta</label>
+          <select class="card-edit-badge-select w-full text-xs font-semibold bg-pink-50/60 border border-pink-200 rounded-xl px-2 py-1.5 text-milalu-dark focus:ring-2 focus:ring-milalu-pink outline-none">
+            <option value="Más Vendido" selected={product.badge === 'Más Vendido'}>Más Vendido</option>
+            <option value="Favorito" selected={product.badge === 'Favorito'}>Favorito</option>
+            <option value="Top Ventas" selected={product.badge === 'Top Ventas'}>Top Ventas</option>
+            <option value="Nuevo" selected={product.badge === 'Nuevo'}>Nuevo</option>
+            <option value="Personalizado" selected={product.badge === 'Personalizado'}>Personalizado</option>
+            <option value="Super Chic" selected={product.badge === 'Super Chic'}>Super Chic</option>
+            <option value="Elegante" selected={product.badge === 'Elegante'}>Elegante</option>
+            <option value="Artesanal" selected={product.badge === 'Artesanal'}>Artesanal</option>
+            <option value="Resistente" selected={product.badge === 'Resistente'}>Resistente</option>
+            <option value="Complemento" selected={product.badge === 'Complemento'}>Complemento</option>
+            <option value="Divertido" selected={product.badge === 'Divertido'}>Divertido</option>
+            <option value="Especial" selected={product.badge === 'Especial'}>Especial</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Nombre del producto -->
+      <div class="mb-2">
+        <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Nombre del artículo *</label>
+        <input
+          type="text"
+          value={product.name}
+          class="card-edit-name-input w-full text-xs font-bold bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark placeholder-gray-400 focus:ring-2 focus:ring-milalu-pink outline-none"
+        />
+      </div>
+
+      <!-- Precio -->
+      <div class="mb-2">
+        <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Precio *</label>
+        <input
+          type="text"
+          value={product.price}
+          class="card-edit-price-input w-full text-xs font-bold text-milalu-pink bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 focus:ring-2 focus:ring-milalu-pink outline-none"
+        />
+      </div>
+
+      <!-- Descripción breve -->
+      <div class="mb-2">
+        <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Descripción breve</label>
+        <textarea
+          rows="2"
+          class="card-edit-shortdesc-input w-full text-xs bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark focus:ring-2 focus:ring-milalu-pink outline-none resize-none"
+        >{product.shortDesc}</textarea>
+      </div>
+
+      <!-- Características o viñetas -->
+      <div class="mb-3">
+        <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Detalles (separados por coma)</label>
+        <input
+          type="text"
+          value={product.features ? product.features.join(', ') : ''}
+          class="card-edit-features-input w-full text-[11px] bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark focus:ring-2 focus:ring-milalu-pink outline-none"
+        />
+      </div>
+    </div>
+
+    <!-- Botones de Acción: Guardar Cambios, Cancelar y Eliminar -->
+    <div class="pt-2 border-t border-pink-100 space-y-2">
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          class="card-edit-save-btn flex-1 bg-gradient-to-r from-milalu-pink to-milalu-pink-dark hover:opacity-95 active:scale-95 text-white text-xs font-bold py-2.5 px-3 rounded-xl shadow-button transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          data-id={product.id}
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>Guardar Cambios</span>
+        </button>
+
+        <button
+          type="button"
+          class="card-edit-cancel-btn bg-gray-100 hover:bg-gray-200 text-milalu-muted active:scale-95 text-xs font-bold py-2.5 px-3 rounded-xl transition-all cursor-pointer"
+        >
+          Cancelar
+        </button>
       </div>
 
       <button
         type="button"
-        class="open-modal-btn text-xs text-milalu-purple font-semibold hover:underline flex items-center gap-1 py-1 px-2"
+        class="card-edit-delete-btn w-full text-rose-500 hover:text-rose-600 hover:bg-rose-50 text-[11px] font-semibold py-1 rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer"
         data-id={product.id}
+        data-name={product.name}
       >
-        <span>Detalles</span>
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
         </svg>
+        <span>Eliminar este artículo</span>
       </button>
     </div>
-
-    <!-- Botón directo para pedir por WhatsApp -->
-    <a
-      href={waLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="w-full bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-xs font-semibold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm transition-all"
-    >
-      <img src="/images/whatsapp-white.png" alt="WhatsApp" class="w-4 h-4 object-contain flex-shrink-0" width="16" height="16" />
-      <span>Personalizar en WhatsApp</span>
-    </a>
   </div>
 </div>

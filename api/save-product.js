@@ -1,4 +1,4 @@
-// api/save-product.js - Vercel Serverless Function para guardar productos y sincronizar con GitHub
+// api/save-product.js - Vercel Serverless Function para agregar, editar y eliminar productos en GitHub
 export default async function handler(req, res) {
   // Encabezados CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,10 +14,10 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { password, product, imageBase64, githubToken } = req.body;
+    const { password, product, imageBase64, githubToken, action } = req.body;
 
-    if (!product || !product.name || !product.price) {
-      return res.status(400).json({ error: 'Faltan datos obligatorios del producto (nombre o precio).' });
+    if (!product || !product.id) {
+      return res.status(400).json({ error: 'Faltan datos obligatorios del producto (ID).' });
     }
 
     // Validar contraseña de administración (por defecto 'milalu2026' o la variable de entorno)
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       return res.status(200).json({
         success: true,
         committed: false,
-        message: 'Producto guardado en este navegador. Para que se actualice automáticamente en Vercel para todos los visitantes, agrega GITHUB_TOKEN en los ajustes de Vercel.'
+        message: 'Cambio guardado en este navegador. Para sincronizar automáticamente con Vercel para todos los visitantes, agrega GITHUB_TOKEN en los ajustes de Vercel.'
       });
     }
 
@@ -42,8 +42,8 @@ export default async function handler(req, res) {
 
     let finalImagePath = product.image;
 
-    // 1. Si se envió imagen en base64, subirla a public/images/products/<id>.png en GitHub
-    if (imageBase64 && imageBase64.startsWith('data:image')) {
+    // 1. Si es acción de guardar/editar y se envió una nueva imagen en base64, subirla a GitHub
+    if (action !== 'delete' && imageBase64 && imageBase64.startsWith('data:image')) {
       const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
       const imageFileName = `${product.id}.png`;
       const githubImagePath = `public/images/products/${imageFileName}`;
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
           'User-Agent': 'Milalu-App'
         },
         body: JSON.stringify({
-          message: `Subir imagen: ${product.name}`,
+          message: `Foto producto: ${product.name}`,
           content: cleanBase64,
           branch: branch,
           ...(existingImageSha ? { sha: existingImageSha } : {})
@@ -102,20 +102,28 @@ export default async function handler(req, res) {
     const productsFileData = await productsFileRes.json();
     const currentSha = productsFileData.sha;
     const currentContent = Buffer.from(productsFileData.content, 'base64').toString('utf8');
-    const productsList = JSON.parse(currentContent);
+    let productsList = JSON.parse(currentContent);
 
-    // 3. Agregar el nuevo producto
-    const updatedProduct = {
-      ...product,
-      image: finalImagePath
-    };
+    let commitMessage = '';
 
-    // Si ya existe por ID lo actualiza, si no lo agrega
-    const existingIndex = productsList.findIndex(p => p.id === product.id);
-    if (existingIndex >= 0) {
-      productsList[existingIndex] = updatedProduct;
+    // 3. Modificar lista según acción (delete vs save/edit)
+    if (action === 'delete') {
+      productsList = productsList.filter(p => p.id !== product.id);
+      commitMessage = `Eliminar producto: ${product.name} (Milalú Web)`;
     } else {
-      productsList.push(updatedProduct);
+      const updatedProduct = {
+        ...product,
+        image: finalImagePath
+      };
+
+      const existingIndex = productsList.findIndex(p => p.id === product.id);
+      if (existingIndex >= 0) {
+        productsList[existingIndex] = updatedProduct;
+        commitMessage = `Actualizar producto: ${product.name} (Milalú Web)`;
+      } else {
+        productsList.push(updatedProduct);
+        commitMessage = `Agregar producto: ${product.name} (Milalú Web)`;
+      }
     }
 
     // 4. Hacer commit a GitHub de src/data/products.json
@@ -128,7 +136,7 @@ export default async function handler(req, res) {
         'User-Agent': 'Milalu-App'
       },
       body: JSON.stringify({
-        message: `Agregar producto: ${product.name} (Milalú Web)`,
+        message: commitMessage,
         content: updatedContentBase64,
         sha: currentSha,
         branch: branch
@@ -143,7 +151,9 @@ export default async function handler(req, res) {
     return res.status(200).json({
       success: true,
       committed: true,
-      message: '¡Producto guardado exitosamente en GitHub! Vercel actualizará la página automáticamente en unos segundos.'
+      message: action === 'delete'
+        ? '¡Producto eliminado en GitHub! Vercel actualizará la página en unos segundos.'
+        : '¡Cambios guardados en GitHub! Vercel actualizará la página en unos segundos.'
     });
 
   } catch (error) {

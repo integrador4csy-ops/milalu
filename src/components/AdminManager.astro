@@ -1,5 +1,5 @@
 ---
-// AdminManager.astro - Sistema de Administración, Seguridad por Contraseña y Creación Inline de Artículos
+// AdminManager.astro - Sistema de Administración, Seguridad por Contraseña, Creación y Edición Inline de Artículos
 ---
 
 <!-- Modal de Acceso por Contraseña -->
@@ -12,7 +12,7 @@
     <button
       type="button"
       id="close-admin-login-btn"
-      class="absolute top-4 right-4 text-gray-400 hover:text-milalu-dark w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold"
+      class="absolute top-4 right-4 text-gray-400 hover:text-milalu-dark w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold cursor-pointer"
     >
       ✕
     </button>
@@ -27,7 +27,7 @@
       Acceso Administrativo
     </h3>
     <p class="text-xs text-milalu-muted mt-1 leading-relaxed">
-      Ingresa la contraseña para activar el modo de agregar y gestionar productos en el catálogo.
+      Ingresa la contraseña para editar precios, fotos o agregar nuevos artículos al catálogo.
     </p>
 
     <form id="admin-login-form" class="mt-5 space-y-3">
@@ -48,7 +48,7 @@
 
       <button
         type="submit"
-        class="w-full bg-gradient-to-r from-milalu-pink to-milalu-pink-dark text-white font-bold text-sm py-3 rounded-2xl shadow-button hover:opacity-95 transition-all active:scale-95"
+        class="w-full bg-gradient-to-r from-milalu-pink to-milalu-pink-dark text-white font-bold text-sm py-3 rounded-2xl shadow-button hover:opacity-95 transition-all active:scale-95 cursor-pointer"
       >
         Entrar como Administrador
       </button>
@@ -75,7 +75,7 @@
   <button
     type="button"
     id="admin-settings-btn"
-    class="text-gray-300 hover:text-white transition-colors flex items-center gap-1"
+    class="text-gray-300 hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
     title="Configurar sincronización con GitHub / Vercel"
   >
     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,13 +90,13 @@
   <button
     type="button"
     id="admin-logout-btn"
-    class="text-rose-300 hover:text-rose-100 transition-colors"
+    class="text-rose-300 hover:text-rose-100 transition-colors cursor-pointer"
   >
     Cerrar sesión
   </button>
 </div>
 
-<!-- Modal de Configuración de Sincronización (Opcional para GitHub Token) -->
+<!-- Modal de Configuración de Sincronización -->
 <div
   id="admin-settings-modal"
   class="fixed inset-0 z-50 bg-milalu-dark/70 backdrop-blur-sm hidden items-center justify-center p-4 transition-opacity"
@@ -105,12 +105,16 @@
   <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full border border-pink-100 shadow-2xl relative animate-pop text-left">
     <div class="flex items-center justify-between pb-3 border-b border-pink-100">
       <h3 class="font-bubble text-lg font-bold text-milalu-dark flex items-center gap-2">
-        <span>⚙️</span> Ajustes de Sincronización
+        <svg class="w-5 h-5 text-milalu-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>Ajustes de Sincronización</span>
       </h3>
       <button
         type="button"
         id="close-admin-settings-btn"
-        class="text-gray-400 hover:text-milalu-dark font-bold text-sm"
+        class="text-gray-400 hover:text-milalu-dark font-bold text-sm cursor-pointer"
       >
         ✕
       </button>
@@ -134,7 +138,7 @@
           GitHub Personal Access Token (Para sincronizar con Vercel)
         </label>
         <p class="text-[11px] text-milalu-muted mb-1.5 leading-relaxed">
-          Permite que al guardar un producto, se suba a GitHub y Vercel lo publique automáticamente para todos los visitantes del mundo.
+          Permite que al guardar o editar un producto, se suba a GitHub y Vercel lo publique automáticamente para todos los visitantes del mundo.
         </p>
         <input
           type="password"
@@ -148,14 +152,14 @@
         <button
           type="button"
           id="save-settings-btn"
-          class="bg-milalu-pink text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-button hover:opacity-95"
+          class="bg-milalu-pink text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-button hover:opacity-95 cursor-pointer"
         >
           Guardar Ajustes
         </button>
         <button
           type="button"
           id="download-backup-btn"
-          class="text-xs text-milalu-purple font-semibold hover:underline"
+          class="text-xs text-milalu-purple font-semibold hover:underline cursor-pointer"
         >
           Descargar copia de productos (JSON)
         </button>
@@ -172,8 +176,26 @@
   const PASS_KEY = 'milalu_admin_password';
   const TOKEN_KEY = 'milalu_github_token';
   const CUSTOM_PRODUCTS_KEY = 'milalu_custom_products';
+  const EDITED_PRODUCTS_KEY = 'milalu_edited_products';
+  const DELETED_PRODUCTS_KEY = 'milalu_deleted_products';
 
   const DEFAULT_PASSWORD = 'milalu2026';
+
+  const categoryNames: Record<string, string> = {
+    tazas: 'Tazas & Tarros',
+    termos: 'Termos',
+    llaveros: 'Llaveros',
+    accesorios: 'Accesorios & Oficina',
+    regalos: 'Regalos & Juegos'
+  };
+
+  const badgeColors: Record<string, string> = {
+    tazas: 'pink',
+    termos: 'cyan',
+    llaveros: 'purple',
+    accesorios: 'yellow',
+    regalos: 'coral'
+  };
 
   // Elementos del DOM
   const loginModal = document.getElementById('admin-login-modal');
@@ -227,12 +249,33 @@
       floatingBar?.classList.remove('hidden');
       triggerCard?.classList.remove('hidden');
       triggerCard?.classList.add('flex');
+
+      // Mostrar todos los botones de 'Editar' en cada tarjeta
+      document.querySelectorAll('.admin-edit-btn').forEach((btn) => {
+        btn.classList.remove('hidden');
+        btn.classList.add('flex');
+      });
     } else {
       localStorage.removeItem(AUTH_KEY);
       floatingBar?.classList.add('hidden');
       triggerCard?.classList.add('hidden');
       triggerCard?.classList.remove('flex');
       draftCard?.classList.add('hidden');
+
+      // Ocultar todos los botones de 'Editar'
+      document.querySelectorAll('.admin-edit-btn').forEach((btn) => {
+        btn.classList.add('hidden');
+        btn.classList.remove('flex');
+      });
+
+      // Restaurar cualquier tarjeta que esté en modo edición
+      document.querySelectorAll('.product-edit-mode').forEach((el) => {
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+      });
+      document.querySelectorAll('.product-view-mode').forEach((el) => {
+        el.classList.remove('hidden');
+      });
     }
   }
 
@@ -257,7 +300,6 @@
     if (entered === getExpectedPassword()) {
       setAdminMode(true);
       closeLogin();
-      // Scroll suave a la cuadrícula de catálogo
       const catalogoEl = document.getElementById('catalogo');
       catalogoEl?.scrollIntoView({ behavior: 'smooth' });
     } else {
@@ -281,14 +323,12 @@
     });
   });
 
-  // Si la URL contiene #admin, abrir el login automáticamente
   if (window.location.hash === '#admin') {
     if (!isAdminLoggedIn()) {
       openLogin();
     }
   }
 
-  // Ataque de teclado rápido: Ctrl + Shift + A abre login admin
   window.addEventListener('keydown', (e) => {
     if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
       e.preventDefault();
@@ -334,7 +374,13 @@
   // Descarga de JSON de respaldo
   downloadBackupBtn?.addEventListener('click', () => {
     const custom = JSON.parse(localStorage.getItem(CUSTOM_PRODUCTS_KEY) || '[]');
-    const all = [...productsDefault, ...custom];
+    const edited = JSON.parse(localStorage.getItem(EDITED_PRODUCTS_KEY) || '{}');
+    const deleted = JSON.parse(localStorage.getItem(DELETED_PRODUCTS_KEY) || '[]');
+
+    let all = [...productsDefault, ...custom];
+    all = all.filter(p => !deleted.includes(p.id));
+    all = all.map(p => edited[p.id] ? { ...p, ...edited[p.id] } : p);
+
     const blob = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -348,7 +394,6 @@
   // CREACIÓN INLINE DEL ARTÍCULO (+ y Borrador)
   // ==========================================
 
-  // Al presionar el "+", se crea la estructura inline en la cuadrícula
   triggerCard?.addEventListener('click', () => {
     triggerCard.classList.add('hidden');
     triggerCard.classList.remove('flex');
@@ -358,7 +403,6 @@
     nameInput?.focus();
   });
 
-  // Al presionar Cancelar, la estructura desaparece y reaparece el botón "+"
   function cancelDraft() {
     if (fileInput) fileInput.value = '';
     currentUploadedBase64 = '';
@@ -381,7 +425,6 @@
     btn.addEventListener('click', cancelDraft);
   });
 
-  // Previsualización instantánea de foto al seleccionar archivo
   fileInput?.addEventListener('change', (e: Event) => {
     const target = e.target as HTMLInputElement;
     if (target.files && target.files[0]) {
@@ -402,7 +445,6 @@
     }
   });
 
-  // Guardar Producto
   saveProductBtn?.addEventListener('click', async () => {
     const name = nameInput.value.trim();
     const price = priceInput.value.trim();
@@ -429,23 +471,6 @@
       return;
     }
 
-    // Preparar objeto producto
-    const categoryNames: Record<string, string> = {
-      tazas: 'Tazas & Tarros',
-      termos: 'Termos',
-      llaveros: 'Llaveros',
-      accesorios: 'Accesorios & Oficina',
-      regalos: 'Regalos & Juegos'
-    };
-
-    const badgeColors: Record<string, string> = {
-      tazas: 'pink',
-      termos: 'cyan',
-      llaveros: 'purple',
-      accesorios: 'yellow',
-      regalos: 'coral'
-    };
-
     const id = 'prod-' + Date.now().toString(36) + '-' + name.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 15);
     const features = featuresRaw
       ? featuresRaw.split(',').map((f) => f.trim()).filter(Boolean)
@@ -466,7 +491,6 @@
       accentColor: '#FF6B9D'
     };
 
-    // Cambiar estado del botón a guardando
     saveProductBtn.setAttribute('disabled', 'true');
     saveProductBtn.innerHTML = `
       <svg class="w-4 h-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
@@ -476,13 +500,13 @@
       <span>Guardando...</span>
     `;
 
-    // 1. Guardar en localStorage para vista inmediata
+    // 1. Guardar en localStorage
     const existingCustom = JSON.parse(localStorage.getItem(CUSTOM_PRODUCTS_KEY) || '[]');
     existingCustom.push(newProduct);
     localStorage.setItem(CUSTOM_PRODUCTS_KEY, JSON.stringify(existingCustom));
 
     // 2. Renderizar inmediatamente en la cuadrícula
-    renderCustomProductInGrid(newProduct);
+    renderProductCardDOM(newProduct);
 
     // 3. Sincronizar con el servidor/GitHub
     try {
@@ -493,35 +517,297 @@
           password: getExpectedPassword(),
           product: newProduct,
           imageBase64: currentUploadedBase64,
-          githubToken: localStorage.getItem(TOKEN_KEY) || undefined
+          githubToken: localStorage.getItem(TOKEN_KEY) || undefined,
+          action: 'save'
         })
       });
 
       const data = await response.json();
       if (data.committed) {
-        alert('🎉 ¡Artículo guardado exitosamente en GitHub! Vercel actualizará la página en 30 segundos para todos los visitantes.');
+        alert('🎉 ¡Artículo guardado exitosamente en GitHub! Vercel actualizará la página en 30 segundos.');
       } else {
-        alert('✅ ¡Artículo guardado en tu catálogo! Para sincronizarlo automáticamente con Vercel para todos los visitantes, recuerda agregar el GITHUB_TOKEN en Ajustes.');
+        alert('✅ ¡Artículo guardado en tu catálogo! Recuerda agregar tu GITHUB_TOKEN en Ajustes para sincronizar con Vercel.');
       }
     } catch (err) {
-      console.warn('API save-product no disponible en entorno local, guardado en almacenamiento local:', err);
+      console.warn('API save-product local fallback:', err);
       alert('✅ ¡Artículo agregado exitosamente al catálogo!');
     }
 
-    // Restaurar botón y resetear borrador
     saveProductBtn.removeAttribute('disabled');
     saveProductBtn.innerHTML = `
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
       </svg>
-      <span>Guardar Producto</span>
+      <span>Guardar</span>
     `;
 
     cancelDraft();
   });
 
-  // Renderizar tarjeta en el DOM
-  function renderCustomProductInGrid(product: any) {
+  // ==========================================
+  // EDICIÓN Y ELIMINACIÓN INLINE DE CUALQUIER ARTÍCULO
+  // ==========================================
+
+  function setupCardEditHandlers(root: Document | HTMLElement = document) {
+    // 1. Botón Editar en cada tarjeta
+    root.querySelectorAll<HTMLButtonElement>('.admin-edit-btn').forEach((btn) => {
+      // Evitar registrar duplicados
+      if ((btn as any)._hasEditHandler) return;
+      (btn as any)._hasEditHandler = true;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest<HTMLElement>('.product-item');
+        if (!card) return;
+
+        // Ocultar vista normal y mostrar vista de edición
+        const viewMode = card.querySelector('.product-view-mode');
+        const editMode = card.querySelector('.product-edit-mode');
+
+        viewMode?.classList.add('hidden');
+        if (editMode) {
+          editMode.classList.remove('hidden');
+          editMode.classList.add('flex');
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+
+    // 2. Botón Cancelar dentro de la tarjeta
+    root.querySelectorAll<HTMLButtonElement>('.card-edit-cancel-btn').forEach((btn) => {
+      if ((btn as any)._hasCancelHandler) return;
+      (btn as any)._hasCancelHandler = true;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest<HTMLElement>('.product-item');
+        if (!card) return;
+
+        const viewMode = card.querySelector('.product-view-mode');
+        const editMode = card.querySelector('.product-edit-mode');
+
+        if (editMode) {
+          editMode.classList.add('hidden');
+          editMode.classList.remove('flex');
+        }
+        viewMode?.classList.remove('hidden');
+      });
+    });
+
+    // 3. Input de Cambio de Foto en la tarjeta
+    root.querySelectorAll<HTMLInputElement>('.card-edit-file-input').forEach((input) => {
+      if ((input as any)._hasFileHandler) return;
+      (input as any)._hasFileHandler = true;
+
+      input.addEventListener('change', (e: Event) => {
+        const card = input.closest<HTMLElement>('.product-item');
+        if (!card) return;
+        const imgPreview = card.querySelector<HTMLImageElement>('.card-edit-img-preview');
+
+        const target = e.target as HTMLInputElement;
+        if (target.files && target.files[0]) {
+          const file = target.files[0];
+          const reader = new FileReader();
+
+          reader.onload = (uploadEvent) => {
+            const base64 = uploadEvent.target?.result as string;
+            if (imgPreview) imgPreview.src = base64;
+            card.dataset.newBase64 = base64;
+          };
+
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+
+    // 4. Botón Guardar Cambios en la tarjeta
+    root.querySelectorAll<HTMLButtonElement>('.card-edit-save-btn').forEach((saveBtn) => {
+      if ((saveBtn as any)._hasSaveHandler) return;
+      (saveBtn as any)._hasSaveHandler = true;
+
+      saveBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const card = saveBtn.closest<HTMLElement>('.product-item');
+        if (!card) return;
+
+        const id = card.getAttribute('data-product-id') || '';
+        const nameInput = card.querySelector<HTMLInputElement>('.card-edit-name-input');
+        const priceInput = card.querySelector<HTMLInputElement>('.card-edit-price-input');
+        const categorySelect = card.querySelector<HTMLSelectElement>('.card-edit-category-select');
+        const badgeSelect = card.querySelector<HTMLSelectElement>('.card-edit-badge-select');
+        const shortDescInput = card.querySelector<HTMLTextAreaElement>('.card-edit-shortdesc-input');
+        const featuresInput = card.querySelector<HTMLInputElement>('.card-edit-features-input');
+        const imgPreview = card.querySelector<HTMLImageElement>('.card-edit-img-preview');
+
+        const name = nameInput?.value.trim() || '';
+        const price = priceInput?.value.trim() || '';
+        const category = categorySelect?.value || 'tazas';
+        const badge = badgeSelect?.value || 'Favorito';
+        const shortDesc = shortDescInput?.value.trim() || '';
+        const featuresRaw = featuresInput?.value.trim() || '';
+        const features = featuresRaw ? featuresRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+        if (!name || !price) {
+          alert('Por favor ingresa al menos nombre y precio.');
+          return;
+        }
+
+        const newImageBase64 = card.dataset.newBase64;
+        const currentImage = newImageBase64 || imgPreview?.src || '';
+
+        const updatedProduct = {
+          id,
+          name,
+          category,
+          categoryName: categoryNames[category] || 'Personalizados',
+          price: price.startsWith('$') ? price : `$${price}`,
+          badge,
+          badgeColor: badgeColors[category] || 'pink',
+          shortDesc,
+          description: shortDesc,
+          features,
+          image: currentImage,
+          accentColor: '#FF6B9D'
+        };
+
+        // Cambiar estado visual del botón
+        saveBtn.setAttribute('disabled', 'true');
+        saveBtn.textContent = 'Guardando...';
+
+        // 1. Actualizar el DOM de la tarjeta en tiempo real
+        const titleEl = card.querySelector('.product-card-title');
+        const priceEl = card.querySelector('.product-card-price');
+        const descEl = card.querySelector('.product-card-desc');
+        const badgeEl = card.querySelector('.product-card-badge');
+        const catLabelEl = card.querySelector('.product-card-category-label');
+        const imgEl = card.querySelector<HTMLImageElement>('.product-card-img');
+        const waLinkEl = card.querySelector<HTMLAnchorElement>('.product-card-walink');
+
+        if (titleEl) titleEl.textContent = name;
+        if (priceEl) priceEl.textContent = updatedProduct.price;
+        if (descEl) descEl.textContent = shortDesc;
+        if (badgeEl) badgeEl.textContent = badge;
+        if (catLabelEl) catLabelEl.textContent = updatedProduct.categoryName;
+        if (imgEl && currentImage) imgEl.src = currentImage;
+        card.setAttribute('data-category', category);
+
+        if (waLinkEl) {
+          const waText = encodeURIComponent(
+            `¡Hola Milalú! Vi este producto en su catálogo y me encantaría personalizarlo:\n\n*${name}*\nPrecio: ${updatedProduct.price}\n\n¿Me podrían dar más información sobre cómo enviar mi foto o diseño?`
+          );
+          waLinkEl.href = `https://wa.me/5215500000000?text=${waText}`;
+        }
+
+        // 2. Guardar en localStorage
+        const editedMap = JSON.parse(localStorage.getItem(EDITED_PRODUCTS_KEY) || '{}');
+        editedMap[id] = updatedProduct;
+        localStorage.setItem(EDITED_PRODUCTS_KEY, JSON.stringify(editedMap));
+
+        // Actualizar en custom products si estaba ahí
+        const customList = JSON.parse(localStorage.getItem(CUSTOM_PRODUCTS_KEY) || '[]');
+        const customIdx = customList.findIndex((p: any) => p.id === id);
+        if (customIdx >= 0) {
+          customList[customIdx] = updatedProduct;
+          localStorage.setItem(CUSTOM_PRODUCTS_KEY, JSON.stringify(customList));
+        }
+
+        // 3. Llamar API de guardado en GitHub / Vercel
+        try {
+          const res = await fetch('/api/save-product', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              password: getExpectedPassword(),
+              product: updatedProduct,
+              imageBase64: newImageBase64 || undefined,
+              githubToken: localStorage.getItem(TOKEN_KEY) || undefined,
+              action: 'save'
+            })
+          });
+
+          const data = await res.json();
+          if (data.committed) {
+            alert('🎉 ¡Cambios guardados en GitHub! Vercel actualizará la página en 30 segundos.');
+          } else {
+            alert('✅ ¡Cambios guardados con éxito!');
+          }
+        } catch (err) {
+          console.warn('API save-product fallback local:', err);
+          alert('✅ ¡Cambios guardados localmente!');
+        }
+
+        saveBtn.removeAttribute('disabled');
+        saveBtn.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>Guardar Cambios</span>
+        `;
+
+        // Regresar a vista normal
+        card.querySelector('.product-edit-mode')?.classList.add('hidden');
+        card.querySelector('.product-edit-mode')?.classList.remove('flex');
+        card.querySelector('.product-view-mode')?.classList.remove('hidden');
+      });
+    });
+
+    // 5. Botón Eliminar Artículo
+    root.querySelectorAll<HTMLButtonElement>('.card-edit-delete-btn').forEach((delBtn) => {
+      if ((delBtn as any)._hasDeleteHandler) return;
+      (delBtn as any)._hasDeleteHandler = true;
+
+      delBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const card = delBtn.closest<HTMLElement>('.product-item');
+        if (!card) return;
+
+        const id = delBtn.getAttribute('data-id') || card.getAttribute('data-product-id') || '';
+        const name = delBtn.getAttribute('data-name') || 'este artículo';
+
+        const confirmDelete = confirm(`¿Estás seguro de que deseas eliminar "${name}" del catálogo?`);
+        if (!confirmDelete) return;
+
+        // 1. Animación y eliminación del DOM
+        card.style.transition = 'all 0.3s ease';
+        card.style.transform = 'scale(0.8)';
+        card.style.opacity = '0';
+        setTimeout(() => card.remove(), 300);
+
+        // 2. Guardar en deleted products de localStorage
+        const deletedList = JSON.parse(localStorage.getItem(DELETED_PRODUCTS_KEY) || '[]');
+        if (!deletedList.includes(id)) {
+          deletedList.push(id);
+          localStorage.setItem(DELETED_PRODUCTS_KEY, JSON.stringify(deletedList));
+        }
+
+        // Quitar de custom products si estaba ahí
+        let customList = JSON.parse(localStorage.getItem(CUSTOM_PRODUCTS_KEY) || '[]');
+        customList = customList.filter((p: any) => p.id !== id);
+        localStorage.setItem(CUSTOM_PRODUCTS_KEY, JSON.stringify(customList));
+
+        // 3. Notificar a GitHub / Vercel
+        try {
+          await fetch('/api/save-product', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              password: getExpectedPassword(),
+              product: { id, name },
+              githubToken: localStorage.getItem(TOKEN_KEY) || undefined,
+              action: 'delete'
+            })
+          });
+          alert('🗑️ ¡Artículo eliminado exitosamente!');
+        } catch (err) {
+          console.warn('API delete fallback local:', err);
+          alert('🗑️ ¡Artículo eliminado de tu vista!');
+        }
+      });
+    });
+  }
+
+  // Renderizar tarjeta completa en el DOM (para productos nuevos agregados dinámicamente)
+  function renderProductCardDOM(product: any) {
     if (!productsGrid || !triggerCard) return;
 
     const waText = encodeURIComponent(
@@ -530,75 +816,180 @@
     const waLink = `https://wa.me/5215500000000?text=${waText}`;
 
     const card = document.createElement('div');
-    card.className = 'product-item group bg-white rounded-3xl p-3 sm:p-4 border border-pink-100 shadow-card hover:shadow-soft transition-all duration-300 flex flex-col justify-between animate-pop';
+    card.className = 'product-item group bg-white rounded-3xl p-3 sm:p-4 border border-pink-100 shadow-card hover:shadow-soft transition-all duration-300 flex flex-col justify-between relative animate-pop';
     card.setAttribute('data-category', product.category);
     card.setAttribute('data-product-id', product.id);
 
+    const isAdm = isAdminLoggedIn();
+
     card.innerHTML = `
-      <div>
-        <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-tr from-pink-50 via-purple-50 to-amber-50 mb-3 flex items-center justify-center p-2">
-          <span class="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full border shadow-xs z-10 bg-milalu-pink-light text-milalu-pink-dark border-pink-200">
-            ${product.badge}
-          </span>
-          <span class="absolute top-2.5 right-2.5 text-[9px] font-medium text-milalu-muted bg-white/90 backdrop-blur px-2 py-0.5 rounded-full shadow-xs">
-            ${product.categoryName}
-          </span>
-          <img
-            src="${product.image}"
-            alt="${product.name}"
-            class="w-full h-full object-contain p-2 rounded-xl group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-          />
-          <button
-            type="button"
-            class="open-modal-btn absolute inset-0 bg-milalu-dark/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold gap-1.5"
-            data-id="${product.id}"
-          >
-            <span class="bg-white/95 text-milalu-dark px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-1.5 font-bold">
-              <svg class="w-3.5 h-3.5 text-milalu-pink flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-              </svg>
-              <span>Ver detalles</span>
+      <div class="product-view-mode flex flex-col justify-between h-full">
+        <div>
+          <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-gradient-to-tr from-pink-50 via-purple-50 to-amber-50 mb-3 flex items-center justify-center p-2">
+            <span class="product-card-badge absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full border shadow-xs z-10 bg-milalu-pink-light text-milalu-pink-dark border-pink-200">
+              ${product.badge}
             </span>
-          </button>
+
+            <button
+              type="button"
+              class="admin-edit-btn ${isAdm ? 'flex' : 'hidden'} absolute top-2.5 right-2.5 z-20 bg-milalu-dark hover:bg-milalu-pink text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md items-center gap-1 transition-all active:scale-95 cursor-pointer"
+              data-id="${product.id}"
+              title="Editar este producto"
+            >
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+              </svg>
+              <span>Editar</span>
+            </button>
+
+            <span class="product-card-category-label absolute top-2.5 right-2.5 text-[9px] font-medium text-milalu-muted bg-white/90 backdrop-blur px-2 py-0.5 rounded-full shadow-xs">
+              ${product.categoryName}
+            </span>
+
+            <img
+              src="${product.image}"
+              alt="${product.name}"
+              class="product-card-img w-full h-full object-contain p-2 rounded-xl group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+
+            <button
+              type="button"
+              class="open-modal-btn absolute inset-0 bg-milalu-dark/20 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-semibold gap-1.5"
+              data-id="${product.id}"
+            >
+              <span class="bg-white/95 text-milalu-dark px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-1.5 font-bold">
+                <svg class="w-3.5 h-3.5 text-milalu-pink flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                <span>Ver detalles</span>
+              </span>
+            </button>
+          </div>
+
+          <h3 class="product-card-title font-bubble text-base sm:text-lg font-bold text-milalu-dark leading-snug line-clamp-2">
+            ${product.name}
+          </h3>
+
+          <p class="product-card-desc mt-1 text-xs text-milalu-muted line-clamp-2">
+            ${product.shortDesc}
+          </p>
         </div>
-        <h3 class="font-bubble text-base sm:text-lg font-bold text-milalu-dark leading-snug line-clamp-2">
-          ${product.name}
-        </h3>
-        <p class="mt-1 text-xs text-milalu-muted line-clamp-2">
-          ${product.shortDesc}
-        </p>
+
+        <div class="mt-3 pt-3 border-t border-pink-100/60">
+          <div class="flex items-center justify-between mb-2.5">
+            <div>
+              <span class="text-[10px] text-milalu-muted uppercase font-medium block">Desde</span>
+              <span class="product-card-price font-bubble text-lg font-bold text-milalu-pink">
+                ${product.price}
+              </span>
+            </div>
+            <button
+              type="button"
+              class="open-modal-btn text-xs text-milalu-purple font-semibold hover:underline flex items-center gap-1 py-1 px-2"
+              data-id="${product.id}"
+            >
+              <span>Detalles</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          <a
+            href="${waLink}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="product-card-walink w-full bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-xs font-semibold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm transition-all"
+          >
+            <img src="/images/whatsapp-white.png" alt="WhatsApp" class="w-4 h-4 object-contain flex-shrink-0" width="16" height="16" />
+            <span>Personalizar en WhatsApp</span>
+          </a>
+        </div>
       </div>
 
-      <div class="mt-3 pt-3 border-t border-pink-100/60">
-        <div class="flex items-center justify-between mb-2.5">
-          <div>
-            <span class="text-[10px] text-milalu-muted uppercase font-medium block">Desde</span>
-            <span class="font-bubble text-lg font-bold text-milalu-pink">
-              ${product.price}
+      <div class="product-edit-mode hidden flex-col justify-between h-full animate-pop">
+        <div>
+          <div class="flex items-center justify-between mb-2 pb-2 border-b border-pink-100">
+            <span class="text-[10px] font-bold text-milalu-pink uppercase tracking-wider flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              Editar Artículo
             </span>
+            <button
+              type="button"
+              class="card-edit-cancel-btn text-xs text-milalu-muted hover:text-rose-500 font-bold px-2 py-0.5 rounded-lg hover:bg-rose-50 transition-colors"
+            >
+              ✕
+            </button>
           </div>
-          <button
-            type="button"
-            class="open-modal-btn text-xs text-milalu-purple font-semibold hover:underline flex items-center gap-1 py-1 px-2"
-            data-id="${product.id}"
-          >
-            <span>Detalles</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
+
+          <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-pink-50/80 border-2 border-dashed border-pink-200 mb-3 flex flex-col items-center justify-center p-2 text-center group cursor-pointer hover:border-milalu-pink transition-colors">
+            <input type="file" class="card-edit-file-input absolute inset-0 opacity-0 cursor-pointer z-20" accept="image/*" />
+            <img src="${product.image}" alt="${product.name}" class="card-edit-img-preview w-full h-full object-contain rounded-xl z-10" />
+            <div class="absolute bottom-2 right-2 z-20 bg-milalu-dark/80 hover:bg-milalu-dark text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-sm pointer-events-none flex items-center gap-1">
+              📷 Cambiar foto
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 mb-2.5">
+            <div>
+              <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Categoría</label>
+              <select class="card-edit-category-select w-full text-xs font-semibold bg-pink-50/60 border border-pink-200 rounded-xl px-2 py-1.5 text-milalu-dark outline-none">
+                <option value="tazas" ${product.category === 'tazas' ? 'selected' : ''}>Tazas & Tarros</option>
+                <option value="termos" ${product.category === 'termos' ? 'selected' : ''}>Termos</option>
+                <option value="llaveros" ${product.category === 'llaveros' ? 'selected' : ''}>Llaveros</option>
+                <option value="accesorios" ${product.category === 'accesorios' ? 'selected' : ''}>Accesorios & Oficina</option>
+                <option value="regalos" ${product.category === 'regalos' ? 'selected' : ''}>Regalos & Juegos</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Etiqueta</label>
+              <select class="card-edit-badge-select w-full text-xs font-semibold bg-pink-50/60 border border-pink-200 rounded-xl px-2 py-1.5 text-milalu-dark outline-none">
+                <option value="Más Vendido" ${product.badge === 'Más Vendido' ? 'selected' : ''}>Más Vendido</option>
+                <option value="Favorito" ${product.badge === 'Favorito' ? 'selected' : ''}>Favorito</option>
+                <option value="Top Ventas" ${product.badge === 'Top Ventas' ? 'selected' : ''}>Top Ventas</option>
+                <option value="Nuevo" ${product.badge === 'Nuevo' ? 'selected' : ''}>Nuevo</option>
+                <option value="Personalizado" ${product.badge === 'Personalizado' ? 'selected' : ''}>Personalizado</option>
+                <option value="Super Chic" ${product.badge === 'Super Chic' ? 'selected' : ''}>Super Chic</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Nombre *</label>
+            <input type="text" value="${product.name}" class="card-edit-name-input w-full text-xs font-bold bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark outline-none" />
+          </div>
+
+          <div class="mb-2">
+            <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Precio *</label>
+            <input type="text" value="${product.price}" class="card-edit-price-input w-full text-xs font-bold text-milalu-pink bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 outline-none" />
+          </div>
+
+          <div class="mb-2">
+            <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Descripción breve</label>
+            <textarea rows="2" class="card-edit-shortdesc-input w-full text-xs bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark outline-none resize-none">${product.shortDesc}</textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Detalles (separados por coma)</label>
+            <input type="text" value="${product.features ? product.features.join(', ') : ''}" class="card-edit-features-input w-full text-[11px] bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark outline-none" />
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-pink-100 space-y-2">
+          <div class="flex items-center gap-2">
+            <button type="button" class="card-edit-save-btn flex-1 bg-gradient-to-r from-milalu-pink to-milalu-pink-dark text-white text-xs font-bold py-2.5 px-3 rounded-xl shadow-button flex items-center justify-center gap-1.5 cursor-pointer" data-id="${product.id}">
+              Guardar Cambios
+            </button>
+            <button type="button" class="card-edit-cancel-btn bg-gray-100 text-milalu-muted text-xs font-bold py-2.5 px-3 rounded-xl cursor-pointer">
+              Cancelar
+            </button>
+          </div>
+          <button type="button" class="card-edit-delete-btn w-full text-rose-500 hover:bg-rose-50 text-[11px] font-semibold py-1 rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer" data-id="${product.id}" data-name="${product.name}">
+            Eliminar este artículo
           </button>
         </div>
-        <a
-          href="${waLink}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="w-full bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white text-xs font-semibold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 shadow-sm transition-all"
-        >
-          <img src="/images/whatsapp-white.png" alt="WhatsApp" class="w-4 h-4 object-contain flex-shrink-0" width="16" height="16" />
-          <span>Personalizar en WhatsApp</span>
-        </a>
       </div>
     `;
 
@@ -612,23 +1003,72 @@
       });
     });
 
+    // Conectar manejadores de edición para esta nueva tarjeta
+    setupCardEditHandlers(card);
+
     // Insertar justo antes del triggerCard
     productsGrid.insertBefore(card, triggerCard);
   }
 
-  // Cargar productos personalizados guardados en localStorage al iniciar la página
+  // ==========================================
+  // INICIALIZACIÓN
+  // ==========================================
+
   window.addEventListener('DOMContentLoaded', () => {
-    // Si ya tenía sesión iniciada, activar modo admin
+    // 1. Activar manejadores de edición en todas las tarjetas existentes del catálogo
+    setupCardEditHandlers(document);
+
+    // 2. Si ya tenía sesión iniciada, activar modo admin
     if (isAdminLoggedIn()) {
       setAdminMode(true);
     }
 
-    const saved = JSON.parse(localStorage.getItem(CUSTOM_PRODUCTS_KEY) || '[]');
-    saved.forEach((prod: any) => {
-      // Verificar si ya existe en el DOM por id
-      const exists = document.querySelector(`[data-product-id="${prod.id}"]`);
-      if (!exists) {
-        renderCustomProductInGrid(prod);
+    // 3. Aplicar eliminaciones previas guardadas en localStorage
+    const deletedList = JSON.parse(localStorage.getItem(DELETED_PRODUCTS_KEY) || '[]');
+    deletedList.forEach((delId: string) => {
+      const card = document.querySelector(`[data-product-id="${delId}"]`);
+      card?.remove();
+    });
+
+    // 4. Aplicar ediciones previas guardadas en localStorage a las tarjetas existentes
+    const editedMap = JSON.parse(localStorage.getItem(EDITED_PRODUCTS_KEY) || '{}');
+    Object.keys(editedMap).forEach((id) => {
+      const updated = editedMap[id];
+      const card = document.querySelector(`[data-product-id="${id}"]`);
+      if (card) {
+        const titleEl = card.querySelector('.product-card-title');
+        const priceEl = card.querySelector('.product-card-price');
+        const descEl = card.querySelector('.product-card-desc');
+        const badgeEl = card.querySelector('.product-card-badge');
+        const catLabelEl = card.querySelector('.product-card-category-label');
+        const imgEl = card.querySelector<HTMLImageElement>('.product-card-img');
+        const waLinkEl = card.querySelector<HTMLAnchorElement>('.product-card-walink');
+
+        if (titleEl) titleEl.textContent = updated.name;
+        if (priceEl) priceEl.textContent = updated.price;
+        if (descEl) descEl.textContent = updated.shortDesc;
+        if (badgeEl) badgeEl.textContent = updated.badge;
+        if (catLabelEl) catLabelEl.textContent = updated.categoryName;
+        if (imgEl && updated.image) imgEl.src = updated.image;
+        card.setAttribute('data-category', updated.category);
+
+        if (waLinkEl) {
+          const waText = encodeURIComponent(
+            `¡Hola Milalú! Vi este producto en su catálogo y me encantaría personalizarlo:\n\n*${updated.name}*\nPrecio: ${updated.price}\n\n¿Me podrían dar más información sobre cómo enviar mi foto o diseño?`
+          );
+          waLinkEl.href = `https://wa.me/5215500000000?text=${waText}`;
+        }
+      }
+    });
+
+    // 5. Cargar productos personalizados nuevos guardados en localStorage
+    const savedCustom = JSON.parse(localStorage.getItem(CUSTOM_PRODUCTS_KEY) || '[]');
+    savedCustom.forEach((prod: any) => {
+      if (!deletedList.includes(prod.id)) {
+        const exists = document.querySelector(`[data-product-id="${prod.id}"]`);
+        if (!exists) {
+          renderProductCardDOM(prod);
+        }
       }
     });
   });
