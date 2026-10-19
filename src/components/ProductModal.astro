@@ -124,8 +124,14 @@ import productsData from '../data/products.json';
   const featuresEl = document.getElementById('modal-features');
   const waLinkEl = document.getElementById('modal-wa-link');
 
-  function openModal(productId) {
-    const product = productsData.find((p) => p.id === productId);
+  function openModal(productId, directProduct) {
+    let product = directProduct || productsData.find((p) => p.id === productId);
+    if (!product) {
+      try {
+        const custom = JSON.parse(localStorage.getItem('milalu_custom_products') || '[]');
+        product = custom.find((p) => p.id === productId);
+      } catch (e) {}
+    }
     if (!product) return;
 
     titleEl.textContent = product.name;
@@ -160,6 +166,8 @@ import productsData from '../data/products.json';
       modalContent.classList.remove('translate-y-full');
     });
   }
+
+  window.openMilaluModal = openModal;
 
   function closeModal() {
     modalContent.classList.add('translate-y-full');

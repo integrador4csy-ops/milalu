@@ -9,6 +9,7 @@ import Process from '../components/Process.astro';
 import Footer from '../components/Footer.astro';
 import ProductModal from '../components/ProductModal.astro';
 import BottomNav from '../components/BottomNav.astro';
+import AdminManager from '../components/AdminManager.astro';
 
 import products from '../data/products.json';
 ---
@@ -46,6 +47,171 @@ import products from '../data/products.json';
         {products.map((product) => (
           <ProductCard product={product} />
         ))}
+
+        <!-- Tarjeta '+' al final del catálogo para nuevo artículo (Visible en Modo Administrador) -->
+        <div
+          id="add-product-trigger-card"
+          class="hidden flex-col items-center justify-center min-h-[340px] rounded-3xl border-2 border-dashed border-pink-300 hover:border-milalu-pink bg-pink-50/40 hover:bg-pink-50/80 transition-all cursor-pointer p-5 text-center group active:scale-95"
+          title="Agregar nuevo producto al catálogo"
+        >
+          <div class="w-14 h-14 rounded-2xl bg-white shadow-button text-milalu-pink flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
+            +
+          </div>
+          <p class="font-bubble text-base font-bold text-milalu-dark mt-3 leading-tight">
+            Agregar nuevo artículo
+          </p>
+          <p class="text-xs text-milalu-muted mt-1 leading-snug">
+            Toca aquí para crear la ficha y llenarla directamente
+          </p>
+        </div>
+
+        <!-- Estructura inline del nuevo artículo (Sin modal, se llena directamente aquí) -->
+        <div
+          id="new-product-draft-card"
+          class="hidden bg-white rounded-3xl p-3 sm:p-4 border-2 border-milalu-pink shadow-soft flex-col justify-between animate-pop col-span-1"
+        >
+          <div>
+            <!-- Header del borrador -->
+            <div class="flex items-center justify-between mb-2 pb-2 border-b border-pink-100">
+              <span class="text-[10px] font-bold text-milalu-pink uppercase tracking-wider flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-milalu-pink animate-pulse"></span>
+                Nuevo Artículo
+              </span>
+              <button
+                type="button"
+                class="cancel-new-product-btn text-xs text-milalu-muted hover:text-rose-500 font-bold px-2 py-0.5 rounded-lg hover:bg-rose-50 transition-colors"
+                title="Cancelar y descartar"
+              >
+                ✕
+              </button>
+            </div>
+
+            <!-- Zona de Imagen con previsualización instantánea en marco idéntico -->
+            <div
+              class="relative w-full aspect-square rounded-2xl overflow-hidden bg-pink-50/80 border-2 border-dashed border-pink-200 mb-3 flex flex-col items-center justify-center p-2 text-center group cursor-pointer hover:border-milalu-pink transition-colors"
+              id="image-dropzone"
+            >
+              <input
+                type="file"
+                id="new-product-file"
+                accept="image/*"
+                class="absolute inset-0 opacity-0 cursor-pointer z-20"
+                title="Seleccionar foto de galería o cámara"
+              />
+              
+              <!-- Previsualización de la foto seleccionada -->
+              <img
+                id="new-product-preview"
+                class="hidden w-full h-full object-contain rounded-xl z-10"
+                alt="Foto del nuevo producto"
+              />
+
+              <!-- Indicador cuando aún no hay foto -->
+              <div id="new-product-placeholder" class="flex flex-col items-center justify-center p-2 pointer-events-none">
+                <div class="w-10 h-10 rounded-xl bg-pink-100 text-milalu-pink flex items-center justify-center mb-1.5 shadow-xs">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <span class="text-xs font-bold text-milalu-dark">Toca para subir foto</span>
+                <span class="text-[10px] text-milalu-muted">JPG o PNG</span>
+              </div>
+            </div>
+
+            <!-- Categoría y Etiqueta -->
+            <div class="grid grid-cols-2 gap-2 mb-2.5">
+              <div>
+                <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Categoría</label>
+                <select id="new-product-category" class="w-full text-xs font-semibold bg-pink-50/60 border border-pink-200 rounded-xl px-2 py-1.5 text-milalu-dark focus:ring-2 focus:ring-milalu-pink outline-none">
+                  <option value="tazas">Tazas & Tarros</option>
+                  <option value="termos">Termos</option>
+                  <option value="llaveros">Llaveros</option>
+                  <option value="accesorios">Accesorios & Oficina</option>
+                  <option value="regalos">Regalos & Juegos</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Etiqueta</label>
+                <select id="new-product-badge" class="w-full text-xs font-semibold bg-pink-50/60 border border-pink-200 rounded-xl px-2 py-1.5 text-milalu-dark focus:ring-2 focus:ring-milalu-pink outline-none">
+                  <option value="Nuevo">Nuevo</option>
+                  <option value="Más Vendido">Más Vendido</option>
+                  <option value="Favorito">Favorito</option>
+                  <option value="Personalizado">Personalizado</option>
+                  <option value="Super Chic">Super Chic</option>
+                  <option value="Especial">Especial</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Nombre del producto -->
+            <div class="mb-2">
+              <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Nombre del artículo *</label>
+              <input
+                type="text"
+                id="new-product-name"
+                placeholder="Ej. Taza Mágica 11oz"
+                class="w-full text-xs font-bold bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark placeholder-gray-400 focus:ring-2 focus:ring-milalu-pink outline-none"
+              />
+            </div>
+
+            <!-- Precio -->
+            <div class="mb-2">
+              <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Precio *</label>
+              <input
+                type="text"
+                id="new-product-price"
+                placeholder="Ej. $150 MXN"
+                class="w-full text-xs font-bold text-milalu-pink bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 placeholder-pink-300 focus:ring-2 focus:ring-milalu-pink outline-none"
+              />
+            </div>
+
+            <!-- Descripción breve -->
+            <div class="mb-2">
+              <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Descripción breve</label>
+              <textarea
+                id="new-product-shortdesc"
+                rows="2"
+                placeholder="Breve resumen del producto..."
+                class="w-full text-xs bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark placeholder-gray-400 focus:ring-2 focus:ring-milalu-pink outline-none resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Características o viñetas -->
+            <div class="mb-3">
+              <label class="text-[10px] font-bold text-milalu-muted block mb-0.5">Detalles (separados por coma)</label>
+              <input
+                type="text"
+                id="new-product-features"
+                placeholder="Ej. Cerámica importada, Sublimación HD"
+                class="w-full text-[11px] bg-pink-50/40 border border-pink-200 rounded-xl px-2.5 py-1.5 text-milalu-dark placeholder-gray-400 focus:ring-2 focus:ring-milalu-pink outline-none"
+              />
+            </div>
+          </div>
+
+          <!-- Botones: Guardar o Cancelar -->
+          <div class="pt-2 border-t border-pink-100 flex items-center gap-2">
+            <button
+              type="button"
+              id="save-new-product-btn"
+              class="flex-1 bg-gradient-to-r from-milalu-pink to-milalu-pink-dark hover:opacity-95 active:scale-95 text-white text-xs font-bold py-2.5 px-3 rounded-xl shadow-button transition-all flex items-center justify-center gap-1.5"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Guardar</span>
+            </button>
+
+            <button
+              type="button"
+              class="cancel-new-product-btn bg-gray-100 hover:bg-gray-200 text-milalu-muted active:scale-95 text-xs font-bold py-2.5 px-3 rounded-xl transition-all"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -60,4 +226,7 @@ import products from '../data/products.json';
 
   <!-- Barra de navegación inferior fija para celular -->
   <BottomNav />
+
+  <!-- Gestor de Administración, Seguridad por Contraseña y Creación Inline -->
+  <AdminManager />
 </Layout>
