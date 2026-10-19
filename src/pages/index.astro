@@ -1,0 +1,63 @@
+---
+// index.astro - Milalú Mobile-First Sublimation Catalog
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Categories from '../components/Categories.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Process from '../components/Process.astro';
+import Footer from '../components/Footer.astro';
+import ProductModal from '../components/ProductModal.astro';
+import BottomNav from '../components/BottomNav.astro';
+
+import products from '../data/products.json';
+---
+
+<Layout
+  title="Milalú | Sublimación y Regalos Personalizados en Tijuana"
+  description="Detalles que hacen la vida más bonita. Tazas, termos, llaveros y regalos personalizados con entrega personal en Tijuana, B.C. ¡Tú imaginas, nosotros lo hacemos realidad!"
+>
+  <Header />
+
+  <main>
+    <Hero />
+
+    <!-- Sección del Catálogo de Productos -->
+    <section id="catalogo" class="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div class="flex items-center justify-between mb-4 px-1">
+        <div>
+          <span class="text-xs font-bold text-milalu-pink uppercase tracking-wider">
+            Nuestros Diseños
+          </span>
+          <h2 class="font-bubble text-2xl sm:text-3xl lg:text-4xl font-bold text-milalu-dark">
+            Catálogo Destacado
+          </h2>
+        </div>
+        <span class="text-xs text-milalu-muted bg-white px-3 py-1.5 rounded-full border border-pink-100 shadow-xs font-medium">
+          {products.length} productos disponibles
+        </span>
+      </div>
+
+      <!-- Barra de filtros deslizables para celular y botones alineados en web -->
+      <Categories />
+
+      <!-- Cuadrícula adaptativa: 2 cols en celular, 3 en tablet, 4 en escritorio -->
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5" id="products-grid">
+        {products.map((product) => (
+          <ProductCard product={product} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Cómo hacer tu pedido -->
+    <Process />
+  </main>
+
+  <Footer />
+
+  <!-- Modal interactivo de producto -->
+  <ProductModal />
+
+  <!-- Barra de navegación inferior fija para celular -->
+  <BottomNav />
+</Layout>

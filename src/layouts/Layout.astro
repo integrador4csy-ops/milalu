@@ -1,0 +1,66 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Milalú | Sublimación y Regalos Personalizados en Tijuana",
+  description = "Convertimos tus ideas en productos únicos llenos de color y amor. Tazas, termos, llaveros y regalos personalizados con entrega en persona en Tijuana, B.C."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+    <meta name="theme-color" content="#FF6B9D" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/logo.png" />
+
+    <!-- Google Fonts: Montserrat (textos) + Fredoka (títulos redondeados tipo logo Milalú) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-milalu-cream text-milalu-dark font-sans antialiased selection:bg-milalu-pink-light selection:text-milalu-pink-dark pb-6 sm:pb-8">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Ocultar barra de scroll en contenedores horizontales pero permitir deslizamiento */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Animación suave de apertura de modales */
+  @keyframes popIn {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-pop {
+    animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Prevenir desbordes de imágenes en cualquier resolución */
+  img {
+    max-width: 100%;
+  }
+</style>

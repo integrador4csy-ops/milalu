@@ -1,0 +1,250 @@
+[
+  {
+    "id": "taza-11oz",
+    "name": "Taza 11oz Personalizada",
+    "category": "tazas",
+    "categoryName": "Tazas",
+    "price": "$100 MXN",
+    "badge": "Más Vendido",
+    "badgeColor": "pink",
+    "shortDesc": "Taza de cerámica blanca o con asa de color personalizada con tu diseño.",
+    "description": "Nuestra taza clásica favorita. Elige entre blanca tradicional o con asa de color. También disponible en variante Taza Mágica ($150) o Taza Metálica ($200).",
+    "features": [
+      "Cerámica importada de alta calidad 11oz",
+      "Opciones: Blanca o con asa de color",
+      "Variante Taza Mágica disponible ($150 MXN)",
+      "Variante Taza Metálica disponible ($200 MXN)",
+      "Muestra digital previa por WhatsApp"
+    ],
+    "image": "/images/products/taza-11oz.png",
+    "accentColor": "#FF6B9D"
+  },
+  {
+    "id": "tarro-glaseado",
+    "name": "Tarro Glaseado Cervecero 16oz",
+    "category": "tazas",
+    "categoryName": "Tarros & Tazas",
+    "price": "$250 MXN",
+    "badge": "Favorito",
+    "badgeColor": "yellow",
+    "shortDesc": "Tarro cervecero glaseado de 16oz con acabado satinado.",
+    "description": "Tarro de vidrio satinado tipo escarchado de 16oz. Disponible en versión glaseado transparente o con fondo de color. Ideal para disfrutar tu bebida bien fría con tu frase o personaje favorito.",
+    "features": [
+      "Vidrio grueso satinado de 16oz",
+      "Opciones: Transparente o con fondo de color",
+      "Resistente al frío y lavado",
+      "Sublimación permanente de alta calidad"
+    ],
+    "image": "/images/products/tarro-glaseado.png",
+    "accentColor": "#FFD93D"
+  },
+  {
+    "id": "termo-viajero",
+    "name": "Termo Viajero para Café o Agua",
+    "category": "termos",
+    "categoryName": "Vasos & Termos",
+    "price": "$250 MXN",
+    "badge": "Top Ventas",
+    "badgeColor": "cyan",
+    "shortDesc": "Vaso térmico para café o agua fría con tapa antiderrame.",
+    "description": "El compañero ideal para tus mañanas de oficina o viajes. Conserva tu café caliente o tu agua fría durante horas. Personalízalo con tu nombre, inicial con flores o logotipo.",
+    "features": [
+      "Apto para bebidas frías o calientes",
+      "Tapa hermética con boquilla ergonómica",
+      "Diseño estilizado compatible con portavasos de auto",
+      "Sublimación duradera y brillante"
+    ],
+    "image": "/images/products/termo-viajero.png",
+    "accentColor": "#4ECDC4"
+  },
+  {
+    "id": "blister",
+    "name": "Blister / Empaque de Regalo",
+    "category": "regalos",
+    "categoryName": "Empaques",
+    "price": "$30 MXN",
+    "badge": "Complemento",
+    "badgeColor": "purple",
+    "shortDesc": "Empaque decorativo con ventana y asa para tazas de 11oz y 15oz.",
+    "description": "Dale la presentación perfecta a tu regalo. Estuche decorado con flores y ventana frontal transparente que deja ver el diseño de la taza.",
+    "features": [
+      "Compatible con tazas de 11oz y 15oz",
+      "Diseño decorativo para regalo",
+      "Ventana frontal transparente",
+      "Asa troquelada para transportar fácil"
+    ],
+    "image": "/images/products/blister.png",
+    "accentColor": "#A78BFA"
+  },
+  {
+    "id": "rompecabezas",
+    "name": "Rompecabezas de Cartón Personalizado",
+    "category": "regalos",
+    "categoryName": "Regalos & Juegos",
+    "price": "$150 MXN",
+    "badge": "Divertido",
+    "badgeColor": "coral",
+    "shortDesc": "Rompecabezas con tus fotos o personajes favoritos en rectángulo o corazón.",
+    "description": "Un detalle interactivo y emotivo. Envíanos tu foto familiar, de pareja o personaje favorito y lo convertimos en un rompecabezas de alta resolución con acabado brillante.",
+    "features": [
+      "Formato Rectángulo: 20x19 cm",
+      "Formato Corazón: 20x30 cm",
+      "Cartón prensado con brillo fotográfico",
+      "Piezas de encaje perfecto"
+    ],
+    "image": "/images/products/rompecabezas.png",
+    "accentColor": "#FF9F7D"
+  },
+  {
+    "id": "lamina-aluminio",
+    "name": "Lámina de Aluminio Fotográfica 20x30",
+    "category": "accesorios",
+    "categoryName": "Decoración",
+    "price": "$200 MXN",
+    "badge": "Elegante",
+    "badgeColor": "yellow",
+    "shortDesc": "Placa de aluminio fotográfico en blanco, dorado o plateado.",
+    "description": "Imprime tus mejores recuerdos, certificados o ilustraciones sobre aluminio pulido de 20x30 cm. El acabado metálico otorga una nitidez y profundidad de color insuperable.",
+    "features": [
+      "Tamaño: 20x30 cm",
+      "Colores disponibles: Blanco, Dorado y Plateado",
+      "Efecto metálico ultra brillante",
+      "Resistente a la humedad y el polvo"
+    ],
+    "image": "/images/products/lamina-aluminio.png",
+    "accentColor": "#FFD93D"
+  },
+  {
+    "id": "mouse-pad",
+    "name": "Mouse Pad Personalizado",
+    "category": "accesorios",
+    "categoryName": "Accesorios",
+    "price": "$150 MXN",
+    "badge": "Oficina & Setup",
+    "badgeColor": "purple",
+    "shortDesc": "Mouse pad de tela suave en formato rectangular o circular.",
+    "description": "Dale vida a tu escritorio con tu personaje, frase motivacional o foto favorita. Superficie de microfibra suave que garantiza un deslizamiento preciso del mouse.",
+    "features": [
+      "Opción Rectangular: 22x18 cm",
+      "Opción Circular: 20x20 cm",
+      "Base de goma antiderrapante",
+      "Colores vivos que no se despintan al lavar"
+    ],
+    "image": "/images/products/mouse-pad.png",
+    "accentColor": "#A78BFA"
+  },
+  {
+    "id": "pluma",
+    "name": "Pluma Personalizada",
+    "category": "accesorios",
+    "categoryName": "Papelería",
+    "price": "$65 MXN",
+    "badge": "Detalle Único",
+    "badgeColor": "pink",
+    "shortDesc": "Bolígrafo personalizado de tinta negra con tu nombre o temática.",
+    "description": "Un detalle práctico y encantador. Personalizada con nombres para maestros, doctores, enfermeros o eventos escolares. Tinta negra de escritura suave y fluida.",
+    "features": [
+      "Tinta color negro de alta fluidez",
+      "Impresión 360° nítida a todo color",
+      "Mecanismo retráctil duradero",
+      "Excelente para souvenirs o regalos escolares"
+    ],
+    "image": "/images/products/pluma.png",
+    "accentColor": "#FF6B9D"
+  },
+  {
+    "id": "llavero-madera",
+    "name": "Llavero de Madera",
+    "category": "llaveros",
+    "categoryName": "Llaveros",
+    "price": "$75 MXN",
+    "badge": "Artesanal",
+    "badgeColor": "coral",
+    "shortDesc": "Llavero de madera natural con retrato en línea o ilustración.",
+    "description": "Toque cálido y artesanal. Convierte una foto de amigos, pareja o mascota en una ilustración de línea sobre madera pulida. Pregunta por las formas disponibles.",
+    "features": [
+      "Madera pulida de textura natural",
+      "Diseño de retrato o frase personalizada",
+      "Herraje de argolla resistente",
+      "Diferentes formas disponibles a elegir"
+    ],
+    "image": "/images/products/llavero-madera.png",
+    "accentColor": "#FF9F7D"
+  },
+  {
+    "id": "llavero-metal",
+    "name": "Llavero Metal o Aluminio",
+    "category": "llaveros",
+    "categoryName": "Llaveros",
+    "price": "$90 MXN",
+    "badge": "Resistente",
+    "badgeColor": "cyan",
+    "shortDesc": "Llavero metálico ultrabrillante para fotos de mascotas y recuerdos.",
+    "description": "El llavero más resistente. La sublimación sobre placa metálica ofrece colores vibrantes que no se rayan fácilmente. Pregunta por las formas disponibles.",
+    "features": [
+      "Estructura metálica sólida",
+      "Placa de aluminio HD ultra brillante",
+      "Ideal para fotos de mascotas, fechas o logos",
+      "Pregunta por las formas disponibles"
+    ],
+    "image": "/images/products/llavero-metal.png",
+    "accentColor": "#4ECDC4"
+  },
+  {
+    "id": "llavero-acrilico",
+    "name": "Llavero Acrílico con Borla",
+    "category": "llaveros",
+    "categoryName": "Llaveros",
+    "price": "$70 MXN",
+    "badge": "Super Chic",
+    "badgeColor": "purple",
+    "shortDesc": "Llavero de acrílico circular con pompón / borla decorativa.",
+    "description": "Moderno, delicado y súper lindo. Incluye borla decorativa a juego para colocar en bolsos, mochilas o llaves. Pregunta por las formas disponibles.",
+    "features": [
+      "Acrílico transparente grueso de alta calidad",
+      "Borla de hilo textil decorativa incluida",
+      "Diseños florales, nombres en lettering o frases",
+      "Pregunta por las formas disponibles"
+    ],
+    "image": "/images/products/llavero-acrilico.png",
+    "accentColor": "#C7B8FF"
+  },
+  {
+    "id": "funda-celular",
+    "name": "Funda de Celular Personalizada",
+    "category": "accesorios",
+    "categoryName": "Accesorios",
+    "price": "$250 MXN",
+    "badge": "Personalizado",
+    "badgeColor": "pink",
+    "shortDesc": "Funda reforzada para celular para tu modelo preferido.",
+    "description": "Protege tu celular con tu diseño favorito. Pregunta por la disponibilidad de tu modelo de teléfono (tiempo de llegada aproximado: 2 semanas).",
+    "features": [
+      "Disponible para una amplia variedad de modelos",
+      "Placa sublimada con colores intensos",
+      "Bordes de protección contra caídas",
+      "Tiempo de entrega estimado: 2 semanas"
+    ],
+    "image": "/images/products/funda-celular.png",
+    "accentColor": "#FF6B9D"
+  },
+  {
+    "id": "lanyard",
+    "name": "Lanyard / Cinta para Cuello",
+    "category": "accesorios",
+    "categoryName": "Accesorios",
+    "price": "$130 MXN",
+    "badge": "Práctico",
+    "badgeColor": "yellow",
+    "shortDesc": "Cinta para cuello porta gafete o llaves con diseño personalizado.",
+    "description": "Cinta suave de poliéster de alta densidad con estampado completo a dos caras. Perfecta para credenciales, llaves, gafetes escolares o de trabajo.",
+    "features": [
+      "Cinta suave que no lastima el cuello",
+      "Mosquetón metálico de seguridad con broche",
+      "Sublimación continua a todo color",
+      "Excelente durabilidad"
+    ],
+    "image": "/images/products/lanyard.png",
+    "accentColor": "#FFD93D"
+  }
+]

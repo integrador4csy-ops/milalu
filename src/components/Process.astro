@@ -1,0 +1,125 @@
+---
+// Process.astro - Cómo pedir en 4 pasos con íconos vectoriales SVG
+const steps = [
+  {
+    num: "1",
+    iconType: "bag",
+    title: "Elige tu producto",
+    desc: "Explora nuestro catálogo: tazas, termos, playeras o souvenirs.",
+    color: "bg-milalu-pink-light text-milalu-pink border-pink-200"
+  },
+  {
+    num: "2",
+    iconType: "chat",
+    title: "Escríbenos a WhatsApp",
+    desc: "Envíanos tu idea, foto, frase o el logo de tu empresa.",
+    color: "bg-milalu-purple-light text-milalu-purple border-purple-200"
+  },
+  {
+    num: "3",
+    iconType: "palette",
+    title: "Muestra virtual gratis",
+    desc: "Te mostramos cómo quedará tu diseño antes de imprimir para tu aprobación.",
+    color: "bg-milalu-yellow-light text-amber-700 border-amber-200"
+  },
+  {
+    num: "4",
+    iconType: "delivery",
+    title: "¡Entrega personal!",
+    desc: "Sublimamos tu pedido con amor y coordinamos contigo la entrega en persona en Tijuana.",
+    color: "bg-milalu-cyan-light text-teal-600 border-teal-200"
+  }
+];
+---
+
+<section id="como-pedir" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white border-y border-pink-100">
+  <div class="max-w-7xl mx-auto">
+    <!-- Encabezado de sección -->
+    <div class="text-center mb-8">
+      <span class="text-xs font-bold text-milalu-pink bg-pink-50 px-3 py-1 rounded-full uppercase tracking-wider border border-pink-100">
+        Super Fácil
+      </span>
+      <h2 class="font-bubble text-2xl sm:text-3xl font-bold text-milalu-dark mt-2">
+        ¿Cómo hacer tu pedido en Milalú?
+      </h2>
+      <p class="text-xs sm:text-sm text-milalu-muted mt-1 max-w-md mx-auto">
+        Personalizar tus regalos favoritos solo toma unos minutos. Te acompañamos en todo el proceso.
+      </p>
+    </div>
+
+    <!-- 4 Pasos en cuadrícula adaptativa para celular -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+      {steps.map((step) => (
+        <div class="bg-white rounded-3xl p-4 border border-pink-100 shadow-card flex sm:flex-col items-center sm:items-start gap-3.5 relative overflow-hidden group hover:border-milalu-pink/40 transition-colors">
+          <div class="absolute -right-2 -bottom-2 text-6xl font-bubble font-bold text-pink-50 select-none pointer-events-none group-hover:text-pink-100 transition-colors">
+            {step.num}
+          </div>
+
+          <div class={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 border shadow-xs ${step.color}`}>
+            {step.iconType === 'bag' && (
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                <path d="M3 6h18"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            )}
+
+            {step.iconType === 'chat' && (
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              </svg>
+            )}
+
+            {step.iconType === 'palette' && (
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+                <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+                <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+                <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-5.5-4.5-8.8-10-8.8Z"/>
+              </svg>
+            )}
+
+            {step.iconType === 'delivery' && (
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m7.5 4.27 9 5.15"/>
+                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                <path d="m3.3 7 8.7 5 8.7-5"/>
+                <path d="M12 22V12"/>
+              </svg>
+            )}
+          </div>
+
+          <div class="relative z-10">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-milalu-muted">Paso {step.num}</span>
+            <h3 class="font-bubble text-base font-bold text-milalu-dark leading-tight mt-0.5">
+              {step.title}
+            </h3>
+            <p class="text-xs text-milalu-muted mt-1">
+              {step.desc}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Botón directo de ayuda -->
+    <div class="mt-6 text-center">
+      <a
+        href="https://wa.me/5215500000000?text=%C2%A1Hola%20Milal%C3%BA!%20Tengo%20dudas%20sobre%20c%C3%B3mo%20hacer%20un%20pedido%20en%20Tijuana"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-xs font-semibold text-milalu-dark bg-pink-50 hover:bg-pink-100/80 px-4 py-2.5 rounded-full border border-pink-200/60 transition-colors"
+      >
+        <span>¿Tienes una duda o diseño especial?</span>
+        <span class="inline-flex items-center gap-1.5 text-[#20ba59] font-bold underline">
+          <img src="/images/whatsapp-green.png" alt="WhatsApp" class="w-3.5 h-3.5 object-contain inline" />
+          <span>Pregúntanos por WhatsApp</span>
+          <svg class="w-3 h-3 inline" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>

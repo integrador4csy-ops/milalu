@@ -1,0 +1,139 @@
+---
+// Categories.astro - Mobile touch swipeable pills with vector SVG icons
+const categories = [
+  {
+    id: 'todos',
+    label: 'Todos',
+    iconType: 'sparkle',
+  },
+  {
+    id: 'tazas',
+    label: 'Tazas & Tarros',
+    iconType: 'mug',
+  },
+  {
+    id: 'termos',
+    label: 'Termos',
+    iconType: 'tumbler',
+  },
+  {
+    id: 'llaveros',
+    label: 'Llaveros',
+    iconType: 'key',
+  },
+  {
+    id: 'accesorios',
+    label: 'Accesorios & Oficina',
+    iconType: 'desktop',
+  },
+  {
+    id: 'regalos',
+    label: 'Regalos & Juegos',
+    iconType: 'gift',
+  },
+];
+---
+
+<!-- Barra fija 100% sólida/opaca sin translucidez -->
+<div class="sticky top-[64px] sm:top-[72px] md:top-[80px] z-40 bg-white py-2.5 border-b border-pink-100 shadow-xs">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Contenedor con scroll horizontal táctil para celular -->
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth">
+      {categories.map((cat, index) => (
+        <button
+          type="button"
+          data-category={cat.id}
+          class={`filter-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold transition-all duration-200 active:scale-95 ${
+            index === 0
+              ? 'active-filter bg-milalu-pink text-white shadow-button'
+              : 'bg-white text-milalu-muted hover:text-milalu-dark border border-pink-100/80 hover:border-milalu-pink/40'
+          }`}
+        >
+          {cat.iconType === 'sparkle' && (
+            <svg class="w-3.5 h-3.5 flex-shrink-0 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
+            </svg>
+          )}
+
+          {cat.iconType === 'mug' && (
+            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M17 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>
+              <line x1="6" y1="2" x2="6" y2="4"/>
+              <line x1="10" y1="2" x2="10" y2="4"/>
+              <line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+          )}
+
+          {cat.iconType === 'tumbler' && (
+            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <path d="M8 2h8v2H8z"/>
+              <path d="M7 5h10l-1 16H8L7 5z"/>
+              <line x1="7" y1="9" x2="17" y2="9"/>
+            </svg>
+          )}
+
+          {cat.iconType === 'key' && (
+            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <circle cx="7.5" cy="15.5" r="4.5"/>
+              <path d="m10.7 12.3 8.3-8.3"/>
+              <path d="m15.5 7.5 2 2"/>
+              <path d="m18 5 2 2"/>
+            </svg>
+          )}
+
+          {cat.iconType === 'desktop' && (
+            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <rect width="18" height="12" x="3" y="4" rx="2"/>
+              <path d="M2 20h20"/>
+            </svg>
+          )}
+
+          {cat.iconType === 'gift' && (
+            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <rect x="3" y="8" width="18" height="14" rx="2"/>
+              <path d="M12 8v14"/>
+              <path d="M3 12h18"/>
+              <path d="M12 8a3 3 0 0 0-3-3 2 2 0 0 0-2 2c0 1 1 1 5 1z"/>
+              <path d="M12 8a3 3 0 0 1 3-3 2 2 0 0 1 2 2c0 1-1 1-5 1z"/>
+            </svg>
+          )}
+
+          <span>{cat.label}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Script para manejar el filtrado instantáneo en celular sin recargar la página
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const products = document.querySelectorAll<HTMLElement>('.product-item');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const selected = btn.getAttribute('data-category');
+
+      // Actualizar estilo visual del botón activo
+      buttons.forEach((b) => {
+        b.classList.remove('active-filter', 'bg-milalu-pink', 'text-white', 'shadow-button');
+        b.classList.add('bg-white', 'text-milalu-muted', 'border', 'border-pink-100/80');
+      });
+
+      btn.classList.add('active-filter', 'bg-milalu-pink', 'text-white', 'shadow-button');
+      btn.classList.remove('bg-white', 'text-milalu-muted', 'border', 'border-pink-100/80');
+
+      // Filtrar tarjetas
+      products.forEach((prod) => {
+        const prodCat = prod.getAttribute('data-category');
+        if (selected === 'todos' || prodCat === selected) {
+          prod.style.display = 'block';
+          prod.classList.add('animate-pop');
+        } else {
+          prod.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

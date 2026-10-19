@@ -1,0 +1,195 @@
+---
+// ProductModal.astro - Mobile Bottom Sheet / Modal
+import productsData from '../data/products.json';
+---
+
+<div
+  id="product-modal"
+  class="fixed inset-0 z-50 bg-milalu-dark/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4 transition-opacity duration-300"
+  aria-hidden="true"
+>
+  <!-- Tarjeta deslizante tipo Bottom-Sheet para celular -->
+  <div
+    class="bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[90vh] overflow-y-auto no-scrollbar shadow-2xl border-t sm:border border-pink-100 p-5 sm:p-6 transform transition-transform duration-300 translate-y-full sm:translate-y-0"
+    id="modal-content"
+  >
+    <!-- Tirador para celular (indicador de deslizamiento) -->
+    <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-4 sm:hidden"></div>
+
+    <div class="flex items-start justify-between gap-3 mb-3">
+      <div>
+        <span id="modal-category" class="text-xs font-semibold text-milalu-pink bg-pink-50 px-2.5 py-1 rounded-full uppercase tracking-wider">
+          Categoría
+        </span>
+        <h3 id="modal-title" class="font-bubble text-xl sm:text-2xl font-bold text-milalu-dark mt-2 leading-tight">
+          Nombre del Producto
+        </h3>
+      </div>
+      <button
+        type="button"
+        id="close-modal-btn"
+        class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-milalu-muted hover:text-milalu-dark flex items-center justify-center flex-shrink-0 transition-colors"
+        aria-label="Cerrar ventana"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Imagen destacada -->
+    <div class="relative w-full aspect-video sm:aspect-[4/3] rounded-2xl overflow-hidden bg-pink-50 my-3">
+      <img
+        id="modal-image"
+        src="/images/brand-board.jpg"
+        alt="Foto del producto"
+        class="w-full h-full object-contain p-4"
+      />
+      <div id="modal-badge-container" class="absolute top-3 left-3">
+        <span id="modal-badge" class="bg-milalu-pink text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+          Destacado
+        </span>
+      </div>
+    </div>
+
+    <!-- Precio y descripción -->
+    <div class="my-3 flex items-baseline justify-between">
+      <span class="text-xs text-milalu-muted">Precio estimado de personalización:</span>
+      <span id="modal-price" class="font-bubble text-2xl font-bold text-milalu-pink">
+        $0.00
+      </span>
+    </div>
+
+    <p id="modal-desc" class="text-xs sm:text-sm text-milalu-muted leading-relaxed">
+      Descripción completa...
+    </p>
+
+    <!-- Características destacadas -->
+    <div class="mt-4 pt-3 border-t border-pink-100">
+      <h4 class="text-xs font-bold text-milalu-dark uppercase tracking-wider mb-2 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-milalu-pink flex-shrink-0 fill-current" viewBox="0 0 24 24">
+          <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
+        </svg>
+        <span>Lo que incluye este producto:</span>
+      </h4>
+      <ul id="modal-features" class="space-y-1.5 text-xs text-milalu-dark/80">
+        <!-- Rellenado por JavaScript -->
+      </ul>
+    </div>
+
+    <!-- Garantía de Milalú -->
+    <div class="mt-4 p-3 rounded-2xl bg-gradient-to-r from-pink-50 via-purple-50 to-pink-50 border border-pink-200/60 text-[11px] text-milalu-muted flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-xl bg-purple-100 text-milalu-purple flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+          <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+          <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+          <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+          <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-5.5-4.5-8.8-10-8.8Z"/>
+        </svg>
+      </div>
+      <p>
+        <strong class="text-milalu-dark font-semibold">Muestra digital previa:</strong> Antes de estampar cualquier producto, te enviaremos una vista previa por WhatsApp para que confirmes y ames tu diseño.
+      </p>
+    </div>
+
+    <!-- Botón CTA WhatsApp -->
+    <div class="mt-5 pt-3 border-t border-pink-100">
+      <a
+        id="modal-wa-link"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-full bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white font-semibold text-sm py-3.5 px-4 rounded-2xl flex items-center justify-center gap-2 shadow-button transition-all"
+      >
+        <img src="/images/whatsapp-white.png" alt="WhatsApp" class="w-5 h-5 object-contain flex-shrink-0" />
+        <span>Pedir este producto por WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ productsData }}>
+  const modal = document.getElementById('product-modal');
+  const modalContent = document.getElementById('modal-content');
+  const closeBtn = document.getElementById('close-modal-btn');
+  const openButtons = document.querySelectorAll('.open-modal-btn');
+
+  const titleEl = document.getElementById('modal-title');
+  const categoryEl = document.getElementById('modal-category');
+  const imageEl = document.getElementById('modal-image');
+  const badgeEl = document.getElementById('modal-badge');
+  const priceEl = document.getElementById('modal-price');
+  const descEl = document.getElementById('modal-desc');
+  const featuresEl = document.getElementById('modal-features');
+  const waLinkEl = document.getElementById('modal-wa-link');
+
+  function openModal(productId) {
+    const product = productsData.find((p) => p.id === productId);
+    if (!product) return;
+
+    titleEl.textContent = product.name;
+    categoryEl.textContent = product.categoryName;
+    imageEl.src = product.image;
+    imageEl.alt = product.name;
+    badgeEl.textContent = product.badge;
+    priceEl.textContent = product.price;
+    descEl.textContent = product.description;
+
+    // Renderizar características
+    featuresEl.innerHTML = '';
+    product.features.forEach((feature) => {
+      const li = document.createElement('li');
+      li.className = 'flex items-center gap-2';
+      li.innerHTML = `<svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>${feature}</span>`;
+      featuresEl.appendChild(li);
+    });
+
+    // Enlace de WhatsApp
+    const waText = encodeURIComponent(
+      `¡Hola Milalú! Me encantó este producto de su página y quiero cotizarlo:\n\n*${product.name}*\nPrecio: ${product.price}\n\n¿Cuáles son los pasos para enviarles mi foto o frase?`
+    );
+    waLinkEl.href = `https://wa.me/5215500000000?text=${waText}`;
+
+    // Mostrar modal con animación suave
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.classList.add('overflow-hidden');
+
+    requestAnimationFrame(() => {
+      modalContent.classList.remove('translate-y-full');
+    });
+  }
+
+  function closeModal() {
+    modalContent.classList.add('translate-y-full');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }, 200);
+  }
+
+  openButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      if (id) openModal(id);
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Tecla Escape para accesibilidad
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+</script>
