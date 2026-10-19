@@ -35,12 +35,16 @@ const {
       rel="stylesheet"
     />
   </head>
-  <body class="bg-milalu-cream text-milalu-dark font-sans antialiased selection:bg-milalu-pink-light selection:text-milalu-pink-dark pb-6 sm:pb-8">
+  <body class="bg-milalu-cream text-milalu-dark font-sans antialiased selection:bg-milalu-pink-light selection:text-milalu-pink-dark pb-6 sm:pb-8 overflow-x-hidden max-w-full">
     <slot />
   </body>
 </html>
 
 <style is:global>
+  html {
+    zoom: 1.25;
+  }
+
   /* Ocultar barra de scroll en contenedores horizontales pero permitir deslizamiento */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
